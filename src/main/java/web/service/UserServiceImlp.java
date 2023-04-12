@@ -5,21 +5,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.dao.UserDao;
 import web.models.User;
+
 import java.util.List;
 
 @Service
-public class UserServiceImlp implements UserService{
+public class UserServiceImlp implements UserService {
 
-    @Autowired
-    UserDao userDao;
+    private UserDao userDao;
 
-    @Transactional
+    public UserServiceImlp(@Autowired UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    @Transactional(readOnly = true)
     @Override
     public List<User> index() {
         return userDao.index();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public User show(long id) {
         return userDao.show(id);
